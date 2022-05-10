@@ -5,7 +5,7 @@ getResult:{[guess;answer]
 	// Function should take in a guess, check against answer and return the guess pattern
 	near: ?[guess in\: answer;1;0nj];
 	exact: ?[guess = answer;2;0nj];
-	res: near ^ exact
+	res: 0 ^ near ^ exact
 	};
 // getResult["weary";"wordy"]
 
@@ -121,26 +121,6 @@ updateGuess:{[guess;pattern]
 	showState[]
 	};
 
-// How to use:
-// pull in a list of words into process
-// run init list
-// use solve to input 
-
-// begin script
-show  each ("Wordle Solver by Rian Morgan";"How to use:");
-try:{[guess]
-	// INPUT @param guess - user guess
-	// OUTPUT board state, top 5 next guesses
-	
-	// Word validity checks
-	if[any ("";`) like\: (),guess;:top5guess[]];
-	if[5 <> count guess;:"Please guess a 5 letter word"];
-	if[not guess in .wordle.list.init;:"Word not in list, try again."];
-	showState[]
-	};
-// try[""]
-
-
 showState:{
 	// show current state
 	numGuess:max 1,-1+count .wordle.pattern.all;
@@ -153,29 +133,12 @@ showState:{
 
 	};
 
+// How to use:
+// pull in a list of words into process
+// run init list
+// use solve to input 
 
-guess0:{[x]
-	pattern: getResult[x[0];x[1]];
-	possibleAnswers:getPatterns[x[0];x[2]][pattern];
-	entropies:$[x[3]=0;.wordle.entropy.init;getListEntropy[x[2]]];
-	bestGuess:{x?max x}[entropies];
-	(bestGuess;x[1];possibleAnswers;$[all pattern = 2 2 2 2 2;x[3];x[3]+1])
-	};
+// begin script
 
-	//count each {guess0\[(x;"wordy";wordleList;0)]}'[ (5#wordleList)][;;0]
-
-	//guess0\[("raise";"wordy";wordleList;0)]
-
-test:{
-	show "format guess (\"raise\";0N 0N 1 2 1)";
-	show "Enter guess:";
-	.rian.guess:guess:read0 0;
-	show "Enter pattern:";
-	.rian.pattern:pattern:"I"$read0 0;
-	list:getPatterns[guess;wordleList] pattern;
-	list
-
-	
-	};
-
+show  each ("Wordle Solver by Rian Morgan";"");
 init[wordleList];
