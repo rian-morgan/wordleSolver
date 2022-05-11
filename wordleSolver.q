@@ -95,7 +95,6 @@ solve0:{[guess;answer]
 	.wordle.guess.best
 	};
 
-// solve/["raise"]
 showSolution:{[guess]
 	res:solve/[guess];
 	state:-6_showState[];
@@ -120,6 +119,7 @@ updateGuess:{[guess;pattern]
 	.wordle.guess.best:{x?max x}[.wordle.entropy.current];
 	showState[]
 	};
+// updateState["raise";1 0 2 0 1]
 
 showState:{
 	// show current state
@@ -130,15 +130,18 @@ showState:{
 	res:res,enlist "  ";
 	res:res,enlist "Top 5 guesses:";
 	-1 res, {key[x],'value[x]}": ",/:string top5guess[];
-
 	};
-
-// How to use:
-// pull in a list of words into process
-// run init list
-// use solve to input 
 
 // begin script
 
-show  each ("Wordle Solver by Rian Morgan";"");
+-1  each (
+	"Wordle Solver by Rian Morgan";
+	"How to use:";
+	"top5guess[] - show current 5 best guesses";
+	"updateGuess[\"guess\";pattern(int list)] 0 - grey ; 1 - yellow ; 2 - green" ;
+	"showState[] - show current game state";
+	"reset[] - reset current game, need to do this each time you want to restart a game";
+	""
+	);
+
 init[wordleList];
